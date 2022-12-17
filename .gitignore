@@ -1,0 +1,10 @@
+aws/*
+!aws/main.tf
+!aws/tfstate/main.tf
+azure/*
+!azure/main.tf
+!azure/tfstate/main.tf
+gcp/*
+!gcp/main.tf
+!gcp/gcp.json
+!gcp/tfstate/main.tf
