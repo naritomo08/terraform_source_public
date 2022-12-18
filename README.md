@@ -26,9 +26,9 @@ VPC作成
 ### dockerソースファイル入手
 
 ```bash
-git clone git@github.com:naritomo08/terraform_docker_public.git terraform
+git clone https://github.com/naritomo08/terraform_docker_public.git terraform
 cd terraform
-git clone git@github.com:naritomo08/terraform_source_public.git source
+git clone https://github.com/naritomo08/terraform_source_public.git source
 cd source
 ```
 
