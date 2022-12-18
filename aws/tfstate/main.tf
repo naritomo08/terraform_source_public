@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-    bucket = "terraform-state-naritomo" #適当なユニークの名前に変えてください
+    bucket = "<コンテナ名>" #適当なユニークの名前に変えてください
 }
 
 resource "aws_s3_bucket_versioning" "versioning_example" {
@@ -14,7 +14,7 @@ resource "aws_s3_bucket_versioning" "versioning_example" {
 }
 
 resource "aws_dynamodb_table" "terraform_state_lock" {
-    name = "terraform_state_lock_naritomo" #適当なユニークの名前に変えてください
+    name = "<dynamodb名>" #適当なユニークの名前に変えてください
     read_capacity = 1
     write_capacity = 1
     hash_key = "LockID"
