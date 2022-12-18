@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-    bucket = "<コンテナ名>" #適当なユニークの名前に変えてください
+    bucket = "<バケット名>" #適当なユニークの名前に変えてください
 }
 
 resource "aws_s3_bucket_versioning" "versioning_example" {
