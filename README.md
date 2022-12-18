@@ -1,4 +1,4 @@
-# terraform_source
+# terraform_source_public
 
 複数人作業に必要なftstate保管バケット作成も含めた、
 terraformソース集になります。
