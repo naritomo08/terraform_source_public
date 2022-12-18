@@ -1,4 +1,4 @@
-#AWSを今回は使いますと言う宣言
+#AWSを今回は使いますという宣言
 provider "aws" {
   region = "ap-northeast-1"
 }
@@ -10,7 +10,7 @@ terraform {
   #  region  = "ap-northeast-1"
   #  key     = "terraform.tfstate"
   #  encrypt = true
-  #  dynamodb_table = "<dynamedb名>"
+  #  dynamodb_table = "<dynamodb名>"
   #}
 }
 
