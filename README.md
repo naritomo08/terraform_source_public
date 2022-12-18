@@ -32,6 +32,13 @@ git clone https://github.com/naritomo08/terraform_source_public.git source
 cd source
 ```
 
+後にファイル編集などをして、git通知が煩わしいときは
+作成したフォルダで以下のコマンドを入れる。
+
+```bash
+ rm -rf .git
+```
+
 ### 共通変数ファイルコピー
 
 ```bash
