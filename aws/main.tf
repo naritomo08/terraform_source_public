@@ -6,11 +6,11 @@ provider "aws" {
 # ftstateをバケットに保管する。
 terraform {
   #backend "s3" {
-  #  bucket  = "terraform-state-naritomo"
+  #  bucket  = "<バケット名>"
   #  region  = "ap-northeast-1"
   #  key     = "terraform.tfstate"
   #  encrypt = true
-  #  dynamodb_table = "terraform_state_lock_naritomo"
+  #  dynamodb_table = "<dynamedb名>"
   #}
 }
 
