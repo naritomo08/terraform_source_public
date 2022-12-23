@@ -107,7 +107,7 @@ admin_password
 
 * GCPコンソールから
 
-GCPコンソールに入り、VMインスタンスの
+GCPコンソールに入り、ComputeEngineの
 接続列のSSHをクリックして、コンソールが
 出てくることを確認する。
 
