@@ -194,5 +194,5 @@ docker-compose exec terraform ash
 cd ソースフォルダ/tfstate
 terraform destroy
 →yesを入力する。
-→各コンソールでバケットが作成されていることを確認する。
+→各コンソールでバケットが削除されていることを確認する。
 ```
