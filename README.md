@@ -20,11 +20,11 @@ terraformソース集になります。
 * ftstate保管バケット(ストレージコンテナ)
 * リソースグループ
 * サブネット
+* Network_Security_Group
+* Network_Security_rule
 * 仮想マシン
     - ネットワークインターフェース
     - パブリックIP
-    - Network_Security_Group
-    - Network_Security_rule
     - 仮想マシン
 
 ### GCP
