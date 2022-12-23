@@ -40,10 +40,17 @@ terraformソース集になります。
 ### dockerソースファイル入手
 
 ```bash
-git clone git@github.com:naritomo08/terraform_docker.git terraform
+git clone https://github.com/naritomo08/terraform_docker_public.git terraform
 cd terraform
-git clone git@github.com:naritomo08/terraform_source.git source
+git clone https://github.com/naritomo08/terraform_source_public.git source
 cd source
+```
+
+後にファイル編集などをして、git通知が煩わしいときは
+作成したフォルダで以下のコマンドを入れる。
+
+```bash
+ rm -rf .git
 ```
 
 ### 共通変数ファイルコピー
@@ -87,6 +94,7 @@ terraform apply
 
 applyコマンド実施後に出てくるIPを控え、
 ユーザ:ec2user、秘密鍵:セキュリティキーに対応した秘密鍵
+を使用してSSHログインする。
 
 #### Azure
 
@@ -130,6 +138,9 @@ terraform destroy -target リソース名
 
 ### 外部バケット作成
 
+先にtfstate/main.tf内の<>部分の名前を適当なリソース名に
+変更すること。
+
 ```bash
 docker-compose exec terraform ash
 cd ソースフォルダ/tfstate
@@ -140,11 +151,10 @@ terraform apply
 →各コンソールでバケットが作成されていることを確認する。
 ```
 
-* Azureの場合以下の作業でストレージ情報を控える。
+* Azureの場合
 
-合わせて、管理コンソールでストレージアカウント名も控える。
-
-以下のコマンドでアカウントキー情報を取得する。
+管理コンソールでストレージ名を控える。
+合わせて以下のコマンドでストレージキー情報を取得する。
 
 ```bash
 az login
@@ -156,10 +166,8 @@ az storage account keys list --resource-group tfstate --account-name <ストレ�
 
 ### 外部バケット適用
 
-* Azureの場合ファイル内のterraformで以下のパラメータを入れる。
-
-storage_account_name(ストレージアカウント名)
-key(アカウントキー)
+各ソースフォルダ内のterraform.shについて、
+<>部分の名前を前の手順で設定したものに合わせる。
 
 ```bash
 docker-compose exec terraform ash
