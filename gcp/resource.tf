@@ -3,6 +3,7 @@ resource "google_compute_network" "vpc_network" {
   name = "gcpvpc"
 }
 
+# subnet
 resource "google_compute_subnetwork" "public" {
   name          = "public-subnetwork"
   ip_cidr_range = "172.17.0.0/25"
@@ -10,6 +11,7 @@ resource "google_compute_subnetwork" "public" {
   network       = google_compute_network.vpc_network.id
 }
 
+# firewall
 resource "google_compute_firewall" "ssh" {
   name = "allow-ssh"
   allow {
