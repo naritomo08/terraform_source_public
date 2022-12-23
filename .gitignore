@@ -1,10 +1,10 @@
 aws/*
-!aws/main.tf
-!aws/tfstate/main.tf
+!aws/*.tf
+!aws/tfstate/*.tf
 azure/*
-!azure/main.tf
-!azure/tfstate/main.tf
+!azure/*.tf
+!azure/tfstate/*.tf
 gcp/*
-!gcp/main.tf
+!gcp/*.tf
 !gcp/gcp.json
-!gcp/tfstate/main.tf
+!gcp/tfstate/*.tf
