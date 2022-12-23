@@ -21,7 +21,7 @@ resource "google_compute_firewall" "ssh" {
   direction     = "INGRESS"
   network       = google_compute_network.vpc_network.id
   priority      = 1000
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = ["35.235.240.0/20"]
   target_tags   = ["ssh"]
 }
 

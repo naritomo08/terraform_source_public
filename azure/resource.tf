@@ -40,6 +40,20 @@ resource "azurerm_network_security_group" "main" {
 
 # azurerm_network_security_rule(public RDP Accept)
 
+# 自分のパブリックIP取得
+data "http" "ifconfig" {
+  url = "http://ipv4.icanhazip.com/"
+}
+
+variable "allowed_cidr" {
+  default = null
+}
+
+locals {
+  myip         = chomp(data.http.ifconfig.body)
+  allowed_cidr = (var.allowed_cidr == null) ? "${local.myip}/32" : var.allowed_cidr
+}
+
 resource "azurerm_network_security_rule" "PublicRDP" {
   name                        = "RDP"
   priority                    = 100
@@ -48,12 +62,11 @@ resource "azurerm_network_security_rule" "PublicRDP" {
   protocol                    = "Tcp"
   source_port_range           = "*"
   destination_port_range      = "3389"
-  source_address_prefix       = "*"
+  source_address_prefix       = local.allowed_cidr
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = azurerm_resource_group.resource_group.name
   network_security_group_name = azurerm_network_security_group.main.name
 }
-
 
 # PublicSubnetとNSGの関連付け
 
