@@ -1,5 +1,16 @@
 provider "aws" {
-    region  = "ap-northeast-1"
+  region = "ap-northeast-1"
+}
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.48.0"
+    }
+  }
+
+  required_version = "1.1.3"
 }
 
 resource "aws_s3_bucket" "terraform_state" {
