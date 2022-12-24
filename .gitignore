@@ -1,10 +1,4 @@
-aws/*
-!aws/*.tf
-!aws/tfstate/*.tf
-azure/*
-!azure/*.tf
-!azure/tfstate/*.tf
-gcp/*
-!gcp/*.tf
-!gcp/gcp.json
-!gcp/tfstate/*.tf
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
