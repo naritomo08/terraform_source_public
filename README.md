@@ -77,7 +77,7 @@ terraform init
 terraform plan
 terraform apply
 →yesを入力する。
-→各コンソールで作成されていることを確認する。
+→管理コンソールで作成されていることを確認する。
 ```
 
 2回目以降は以下のコマンドで良い
@@ -85,7 +85,7 @@ terraform apply
 terraform plan
 terraform apply
 →yesを入力する。
-→コンソールで作成されていることを確認する。
+→管理コンソールで作成されていることを確認する。
 ```
 
 ### 各仮想マシンログイン
@@ -120,7 +120,7 @@ docker-compose exec terraform ash
 cd ソースフォルダ
 terraform destroy
 →yesを入力する。
-→AWSコンソールで削除されていることを確認する。
+→管理コンソールで削除されていることを確認する。
 ```
 
 一部リソースの場合以下のコマンドで良い。
@@ -128,7 +128,7 @@ terraform destroy
 ```bash
 terraform destroy -target リソース名
 →yesを入力する。
-→AWSコンソールで削除されていることを確認する。
+→管理コンソールで削除されていることを確認する。
 ```
 ## tfstateを外出しして対応する方法
 
@@ -150,7 +150,7 @@ terraform init
 terraform plan
 terraform apply
 →yesを入力する。
-→各コンソールでバケットが作成されていることを確認する。
+→管理コンソールでバケットが作成されていることを確認する。
 ```
 
 * Azureの場合
@@ -193,11 +193,6 @@ terraform init -migrate-state
 ```
 
 ### バケットリソース削除
-
-バケットを削除する際は予め、
-中にある全てのファイルを削除し、
-その後terraformからのモジュール削除を行うこと。
-(AWSのみ)
 
 ```bash
 docker-compose exec terraform ash
