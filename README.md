@@ -72,16 +72,16 @@ ARM_TENANT_ID=
 →AWSの場合、操作ユーザに対応した
  上記の情報を入れる。
 
-gcp管理画面からアクセスjsonキー(gcp.json)を入手して、ソースファイルと同じ場所に置く
+gcp管理画面からアクセスjsonキー(gcp.json)を入手して、gcpフォルダ内に入れる。
 ```
 
 環境変数を取得するための方法は以下を参照してください。
 
-https://qiita.com/SSMU3/items/ce6e291a653f76ddcf79
+[UbuntuでAWS CLIを使えるようにする](https://qiita.com/SSMU3/items/ce6e291a653f76ddcf79)
 
-https://qiita.com/takakuda/items/1e93fb0a7cc542b4adc1
+[Terraformを使い、Azureのインフラ構築してみた](https://qiita.com/takakuda/items/1e93fb0a7cc542b4adc1)
 
-https://dev.classmethod.jp/articles/accesse-google-cloud-with-terraform/
+[TerraformでGoogle Cloudを扱うためのローカル端末環境構築](https://dev.classmethod.jp/articles/accesse-google-cloud-with-terraform/)
 
 ### 共通変数ファイルコピー
 
