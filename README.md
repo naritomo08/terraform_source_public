@@ -53,6 +53,18 @@ cd source
  rm -rf .git
 ```
 
+### AWS/Azureアクセスキー入手、GCPアクセスJSONファイル入手
+
+以下のサイトを参考にアクセスキー、アクセスJSONファイルを入手する。
+
+アクセスキーは.env.exampleに書き込み、JSONファイル(gcp.json)はgcpフォルダに入れる。
+
+https://qiita.com/SSMU3/items/ce6e291a653f76ddcf79
+
+https://qiita.com/takakuda/items/1e93fb0a7cc542b4adc1
+
+https://dev.classmethod.jp/articles/accesse-google-cloud-with-terraform/
+
 ### 共通変数ファイルコピー
 
 ```bash
