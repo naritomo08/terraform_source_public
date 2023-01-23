@@ -55,9 +55,27 @@ cd source
 
 ### AWS/Azureアクセスキー入手、GCPアクセスJSONファイル入手
 
-以下のサイトを参考にアクセスキー、アクセスJSONファイルを入手する。
+```bash
+vi .env.example
 
-アクセスキーは.env.exampleに書き込み、JSONファイル(gcp.json)はgcpフォルダに入れる。
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+
+→AWSの場合、操作ユーザに対応した
+ 上記の情報を入れる。
+
+ARM_SUBSCRIPTION_ID=
+ARM_CLIENT_ID=
+ARM_CLIENT_SECRET=
+ARM_TENANT_ID=
+
+→AWSの場合、操作ユーザに対応した
+ 上記の情報を入れる。
+
+gcp管理画面からアクセスjsonキー(gcp.json)を入手して、ソースファイルと同じ場所に置く
+```
+
+環境変数を取得するための方法は以下を参照してください。
 
 https://qiita.com/SSMU3/items/ce6e291a653f76ddcf79
 
