@@ -15,6 +15,8 @@ resource "aws_subnet" "public_1a" {
   # Subnetを作成するAZ
   availability_zone = "ap-northeast-1a"
   cidr_block        = "192.168.0.0/25"
+  # trueにするとインスタンスにパブリックIPアドレスを自動的に割り当ててくれる
+  map_public_ip_on_launch = true
   tags = {
     Name = "awsvpc-prod"
   }
@@ -94,6 +96,16 @@ resource "aws_security_group" "aws_ec2_sg" {
   }
 }
 
+# ====================
+#
+# Elastic IP
+#
+# ====================
+resource "aws_eip" "example" {
+  instance = aws_instance.aws_ec2.id
+  vpc      = true
+}
+
 # ---------------------------
 # EC2
 # ---------------------------
@@ -103,14 +115,34 @@ data "aws_ssm_parameter" "amzn2_latest_ami" {
   name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 }
 
-# EC2作成(パブリックIPあり)
+# Ubuntu20.04のAMIを取得
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+# EC2作成(パブリックIPなし)
 resource "aws_instance" "aws_ec2" {
-  ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
+  # AmazonLinux2
+  # ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
+  # Ubuntu20.04
+  ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
   availability_zone           = "ap-northeast-1a"
   vpc_security_group_ids      = [aws_security_group.aws_ec2_sg.id]
   subnet_id                   = aws_subnet.public_1a.id
-  associate_public_ip_address = "true"
+  associate_public_ip_address = "false"
   key_name                    = "serverkey"
   tags = {
     Name = "vm01"
