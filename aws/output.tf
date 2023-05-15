@@ -4,6 +4,10 @@
 #}
 
 # 別作成したパブリックIP参照
-output "public_ip" {
-  value = aws_eip.example.public_ip
+output "public_ip1" {
+  value = aws_eip.example_1.public_ip
+}
+
+output "public_ip2" {
+  value = aws_eip.example_2.public_ip
 }

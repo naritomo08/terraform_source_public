@@ -22,6 +22,22 @@ resource "aws_subnet" "public_1a" {
   }
 }
 
+#上記のVPCにサブネットを追加します。
+resource "aws_subnet" "public_1c" {
+  # 上記で作成したVPCを参照し、そのVPC内にSubnetを作成します。
+  vpc_id = aws_vpc.main_vpc.id
+
+  # Subnetを作成するAZ
+  availability_zone = "ap-northeast-1c"
+  cidr_block        = "192.168.0.128/25"
+  # trueにするとインスタンスにパブリックIPアドレスを自動的に割り当ててくれる
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "awsvpc-prod"
+  }
+}
+
+
 # ---------------------------
 # Internet Gateway
 # ---------------------------
@@ -48,8 +64,13 @@ resource "aws_route_table" "aws_public_rt" {
 }
 
 # SubnetとRoute tableの関連付け
-resource "aws_route_table_association" "aws_public_rt_associate" {
+resource "aws_route_table_association" "aws_public_rt_associate1a" {
   subnet_id      = aws_subnet.public_1a.id
+  route_table_id = aws_route_table.aws_public_rt.id
+}
+
+resource "aws_route_table_association" "aws_public_rt_associate1c" {
+  subnet_id      = aws_subnet.public_1c.id
   route_table_id = aws_route_table.aws_public_rt.id
 }
 
@@ -87,6 +108,13 @@ resource "aws_security_group" "aws_ec2_sg" {
     cidr_blocks = [local.allowed_cidr]
   }
 
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [local.allowed_cidr]
+  }
+
   # アウトバウンドルール
   egress {
     from_port   = 0
@@ -101,8 +129,13 @@ resource "aws_security_group" "aws_ec2_sg" {
 # Elastic IP
 #
 # ====================
-resource "aws_eip" "example" {
-  instance = aws_instance.aws_ec2.id
+resource "aws_eip" "example_1" {
+  instance = aws_instance.aws_ec2_1.id
+  vpc      = true
+}
+
+resource "aws_eip" "example_2" {
+  instance = aws_instance.aws_ec2_2.id
   vpc      = true
 }
 
@@ -133,11 +166,11 @@ data "aws_ami" "ubuntu" {
 }
 
 # EC2作成(パブリックIPなし)
-resource "aws_instance" "aws_ec2" {
+resource "aws_instance" "aws_ec2_1" {
   # AmazonLinux2
-  # ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
+  ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
   # Ubuntu20.04
-  ami                         = data.aws_ami.ubuntu.id
+  # ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
   availability_zone           = "ap-northeast-1a"
   vpc_security_group_ids      = [aws_security_group.aws_ec2_sg.id]
@@ -146,5 +179,21 @@ resource "aws_instance" "aws_ec2" {
   key_name                    = "serverkey"
   tags = {
     Name = "vm01"
+  }
+}
+
+resource "aws_instance" "aws_ec2_2" {
+  # AmazonLinux2
+  ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
+  # Ubuntu20.04
+  # ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t2.micro"
+  availability_zone           = "ap-northeast-1c"
+  vpc_security_group_ids      = [aws_security_group.aws_ec2_sg.id]
+  subnet_id                   = aws_subnet.public_1c.id
+  associate_public_ip_address = "false"
+  key_name                    = "serverkey"
+  tags = {
+    Name = "vm02"
   }
 }
