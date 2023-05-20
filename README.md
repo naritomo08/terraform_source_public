@@ -98,7 +98,16 @@ docker-compose up -d
 
 ### terraform利用
 
-AWSの場合は予め"serverkey"名でセキュリティキー登録すること。
+AWSの場合、EC2メニューのキーペアにて"serverkey"名でSSHセキュリティキー登録すること。
+
+GCPの場合、ComputeEngineの設定-メタデータにて、SSHセキュリティキー登録すること。
+
+登録後、表示されるユーザ名を控える。
+
+合わせて以下のメタデータ登録も実施すること。
+
+* キー serial-enable
+* 値 TRUE
 
 ```bash
 docker-compose exec terraform ash
@@ -135,11 +144,9 @@ admin_password
 
 #### GCP
 
-* GCPコンソールから
-
-GCPコンソールに入り、ComputeEngineの
-接続列のSSHをクリックして、コンソールが
-出てくることを確認する。
+applyコマンド実施後に出てくるIPを控え、
+ユーザ:セキュリティーキー登録時に控えたユーザ名、秘密鍵:セキュリティキーに対応した秘密鍵
+を使用してSSHログインする。
 
 ### terraform作成リソース削除
 
