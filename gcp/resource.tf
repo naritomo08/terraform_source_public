@@ -11,6 +11,20 @@ resource "google_compute_subnetwork" "public" {
   network       = google_compute_network.vpc_network.id
 }
 
+# 自分のパブリックIP取得
+data "http" "ifconfig" {
+  url = "http://ipv4.icanhazip.com/"
+}
+
+variable "allowed_cidr" {
+  default = null
+}
+
+locals {
+  myip         = chomp(data.http.ifconfig.body)
+  allowed_cidr = (var.allowed_cidr == null) ? "${local.myip}/32" : var.allowed_cidr
+}
+
 # firewall
 resource "google_compute_firewall" "ssh" {
   name = "allow-ssh"
@@ -21,7 +35,7 @@ resource "google_compute_firewall" "ssh" {
   direction     = "INGRESS"
   network       = google_compute_network.vpc_network.id
   priority      = 1000
-  source_ranges = ["35.235.240.0/20"]
+  source_ranges = [local.allowed_cidr]
   target_tags   = ["ssh"]
 }
 
