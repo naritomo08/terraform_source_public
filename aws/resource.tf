@@ -22,6 +22,21 @@ resource "aws_subnet" "public_1a" {
   }
 }
 
+#上記のVPCにサブネットを追加します。
+resource "aws_subnet" "public_1c" {
+  # 上記で作成したVPCを参照し、そのVPC内にSubnetを作成します。
+  vpc_id = aws_vpc.main_vpc.id
+
+  # Subnetを作成するAZ
+  availability_zone = "ap-northeast-1c"
+  cidr_block        = "192.168.0.128/25"
+  # trueにするとインスタンスにパブリックIPアドレスを自動的に割り当ててくれる
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "awsvpc-prod"
+  }
+}
+
 # ---------------------------
 # Internet Gateway
 # ---------------------------
@@ -50,6 +65,11 @@ resource "aws_route_table" "aws_public_rt" {
 # SubnetとRoute tableの関連付け
 resource "aws_route_table_association" "aws_public_rt_associate" {
   subnet_id      = aws_subnet.public_1a.id
+  route_table_id = aws_route_table.aws_public_rt.id
+}
+
+resource "aws_route_table_association" "aws_public_rt_associate1c" {
+  subnet_id      = aws_subnet.public_1c.id
   route_table_id = aws_route_table.aws_public_rt.id
 }
 
