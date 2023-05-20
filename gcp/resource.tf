@@ -1,6 +1,9 @@
 # VPC
 resource "google_compute_network" "vpc_network" {
   name = "gcpvpc"
+  auto_create_subnetworks = false
+  routing_mode            = "REGIONAL"
+  mtu                     = 1460
 }
 
 # subnet
