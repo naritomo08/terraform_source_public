@@ -134,11 +134,6 @@ resource "aws_eip" "example_1" {
   vpc      = true
 }
 
-resource "aws_eip" "example_2" {
-  instance = aws_instance.aws_ec2_2.id
-  vpc      = true
-}
-
 # ---------------------------
 # EC2
 # ---------------------------
@@ -179,21 +174,5 @@ resource "aws_instance" "aws_ec2_1" {
   key_name                    = "serverkey"
   tags = {
     Name = "vm01"
-  }
-}
-
-resource "aws_instance" "aws_ec2_2" {
-  # AmazonLinux2
-  ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
-  # Ubuntu20.04
-  # ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.micro"
-  availability_zone           = "ap-northeast-1c"
-  vpc_security_group_ids      = [aws_security_group.aws_ec2_sg.id]
-  subnet_id                   = aws_subnet.public_1c.id
-  associate_public_ip_address = "false"
-  key_name                    = "serverkey"
-  tags = {
-    Name = "vm02"
   }
 }
