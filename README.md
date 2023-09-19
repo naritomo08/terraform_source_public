@@ -130,10 +130,9 @@ ls
 
 ```bash
 cd source/oci/apikey
-openssl genrsa -out id_server_rsa
-openssl rsa -in id_server_rsa -pubout -out id_server_rsa.pem
+ssh-keygen -t rsa -N "" -b 2048 -C "id_server_rsa" -f id_server_rsa
 ls
-→id_server_rsa,id_server_rsa.pemファイルが存在していることを確認する。
+→id_server_rsa,id_server_rsa.pubファイルが存在していることを確認する。
 ```
 
 ### OCIアカウント設定（OCI利用）
@@ -233,6 +232,12 @@ admin_password
 
 applyコマンド実施後に出てくるIPを控え、
 ユーザ:セキュリティーキー登録時に控えたユーザ名、秘密鍵:セキュリティキーに対応した秘密鍵
+を使用してSSHログインする。
+
+#### OCI
+
+applyコマンド実施後に出てくるIPを控え、
+ユーザ:obc、秘密鍵:セキュリティキーに対応した秘密鍵
 を使用してSSHログインする。
 
 ### terraform作成リソース削除
