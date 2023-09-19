@@ -21,10 +21,10 @@ variable "route_table_display_name" {
 
 # security list web
 variable "sl_egress_destination_web" {
-  default = "192.168.100.0/23"
+  default = "0.0.0.0/0"
 }
 variable "sl_egress_protocol_web" {
-  default = "6"
+  default = "ALL"
 }
 variable "sl_ingress_source_web" {
   default = "${allowed_cidr}" 

@@ -2,7 +2,7 @@ variable "NumInstances"{
   default = "1"
 }
 variable "instance_shape" {
-  default = "VM.Standard2.1"
+  default = "VM.Standard.E2.1"
 }
 variable "instance_display_name" {
   default = "WebInstance"
