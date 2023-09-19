@@ -166,6 +166,16 @@ variable "ssh_public_server_key" {
 }
 ```
 
+### OCIインスタンスOSソース選択（OCI利用）
+
+```bash
+vi source/oci/default/compute-var.tf
+
+以下の部分について、リージョン名/OCIDを利用しているリージョンに合わせ書き換える。
+
+ap-osaka-1 = "ocid1.image.oc1.ap-osaka-1.aaaaaaaaj25u2lvizw5m7zzyujx35njtu7qfgy4ci5pqahojdoqoien74znq"
+```
+
 ### terraformコンテナ稼働
 
 ```bash
