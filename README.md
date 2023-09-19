@@ -130,7 +130,7 @@ ls
 
 ```bash
 cd source/oci/apikey
-openssl genrsa -out id_rsa
+openssl genrsa -out id_server_rsa
 openssl rsa -in id_server_rsa -pubout -out id_server_rsa.pem
 ls
 →id_server_rsa,id_server_rsa.pemファイルが存在していることを確認する。
