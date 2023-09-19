@@ -10,7 +10,7 @@ variable "instance_display_name" {
 variable "instance_image_ocid" {
   type = "map"
   default = {
-    ap-tokyo-1 = "ocid1.image.oc1.ap-tokyo-1.aaaaaaaattpocc2scb7ece7xwpadvo4c5e7iuyg7p3mhbm554uurcgnwh5cq"
+    ap-osaka-1 = "ocid1.image.oc1.ap-osaka-1.aaaaaaaa2wpo37usm2lz4gkv26lai7kjwbml7bj2xyrze2yzcqycsls6evxa"
   }
 }
 variable "ssh_public_key" {
