@@ -35,6 +35,15 @@ terraformソース集になります。
 * google_compute_firewall
 * google_compute_instance
 
+### OCI
+
+* ftstate保管バケット
+* VCN
+* Subnet
+* Internet gateway
+* Route Table
+* Compute
+
 ## 使用方法
 
 ### dockerソースファイル入手
@@ -87,6 +96,74 @@ gcp管理画面からアクセスjsonキー(gcp.json)を入手して、gcpフォ
 
 ```bash
 cp .env.example ../.env
+```
+
+### OCI APIキー作成(OCI利用)
+
+以下のコマンドでOCI APIキーを作成する。
+
+```bash
+cd source/oci/apikey
+openssl genrsa -out id_rsa
+openssl rsa -in id_rsa -pubout -out id_rsa.pem
+ls
+→id_rsa,id_rsa.pemファイルが存在していることを確認する。
+```
+
+### OCID情報の収集（OCI利用）
+
+以下のサイトの"3.OCID情報の収集"を参照し、以下の情報を収集する。
+
+リソースを入れるコンパートメントは予め作成すること。
+
+* テナンシのOCID
+* ユーザーのOCID
+* フィンガープリント
+* コンパートメントのOCID
+* 使用しているリージョンの識別子(例:ap-osaka-1)
+
+参考サイト：
+
+[TerraformでOCI上に仮想サーバを建ててみた](https://blogs.techvan.co.jp/oci/2019/04/08/terraform%e3%81%a7oci%e4%b8%8a%e3%81%ab%e4%bb%ae%e6%83%b3%e3%82%b5%e3%83%bc%e3%83%90%e3%82%92%e5%bb%ba%e3%81%a6%e3%81%a6%e3%81%bf%e3%81%9f/)
+
+### 仮想マシン用キー設定（OCI利用）
+
+```bash
+cd source/oci/apikey
+openssl genrsa -out id_rsa
+openssl rsa -in id_server_rsa -pubout -out id_server_rsa.pem
+ls
+→id_server_rsa,id_server_rsa.pemファイルが存在していることを確認する。
+```
+
+### OCIアカウント設定（OCI利用）
+
+```bash
+vi source/oci/tfstate/varidate.tf
+vi source/oci/default/varidate.tf
+
+以下の内容で作成する。
+variable "tenancy_ocid" {
+  default = "テナンシのOCID"
+}
+variable "user_ocid" {
+  default = "ユーザーのOCID"
+}
+variable "fingerprint" {
+  default = "フィンガープリント"
+}
+variable "private_key_path" {
+  default = "../apikey/id_rsa"
+}
+variable "region" {
+  default = "使用しているリージョンの識別子"
+}
+variable "compartment_ocid" {
+  default = "コンパートメントのOCID"
+}
+variable "ssh_public_server_key" {
+  default = "../apikey/id_server_rsa.pem"
+}
 ```
 
 ### terraformコンテナ稼働
