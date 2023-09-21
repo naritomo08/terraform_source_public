@@ -157,23 +157,26 @@ variable "private_key_path" {
 variable "region" {
   default = "使用しているリージョンの識別子"
 }
+variable "tenancy_namespace" {
+  default = "テナンシのオブジェクト・ストレージ・ネームスペース"
+}
 variable "compartment_ocid" {
   default = "コンパートメントのOCID"
 }
 variable "ssh_public_server_key" {
-  default = "../apikey/id_server_rsa.pemの中身を記載"
+  default = "../apikey/id_server_rsa.pem"
 }
 ```
 
-### OCIインスタンスOSソース選択（OCI利用）
+### OCIバケットアクセスキー作成（OCI利用）
 
-```bash
-vi source/oci/default/compute-var.tf
+以下のサイトの"S3互換バックエンドの使用"の手順１〜３を参照し、バケットアクセスキー設定を行う。
 
-以下の部分について、リージョン名/OCIDを利用しているリージョンに合わせ書き換える。
+手順３での[default]エントリ部分は、[oci_access]に書き換えること。
 
-ap-osaka-1 = "ocid1.image.oc1.ap-osaka-1.aaaaaaaaj25u2lvizw5m7zzyujx35njtu7qfgy4ci5pqahojdoqoien74znq"
-```
+参考サイト：
+
+[状態ファイル用のオブジェクト・ストレージの使用](https://docs.oracle.com/ja-jp/iaas/Content/API/SDKDocs/terraformUsingObjectStore.htm)
 
 ### terraformコンテナ稼働
 
@@ -197,7 +200,7 @@ GCPの場合、ComputeEngineの設定-メタデータにて、SSHセキュリテ
 
 ```bash
 docker-compose exec terraform ash
-cd ソースフォルダ
+cd ソースフォルダ/default
 terraform init
 terraform plan
 terraform apply
@@ -246,7 +249,7 @@ applyコマンド実施後に出てくるIPを控え、
 
 ```bash
 docker-compose exec terraform ash
-cd ソースフォルダ
+cd ソースフォルダ/default
 terraform destroy
 →yesを入力する。
 →管理コンソールで削除されていることを確認する。
@@ -264,7 +267,7 @@ terraform destroy -target リソース名
 グループで行う場合、誰かが初回で行えば良い。
 複数人で管理する場合行うこと。
 
-ソースファイルの中にあるterraform部分の中を
+backend.tfの中にあるterraform部分の中を
 コメントアウトを外し、以下のコマンドを入力する。
 
 ### 外部バケット作成
@@ -295,6 +298,19 @@ az storage account keys list --resource-group tfstate --account-name <ストレ�
 →帰ってくる値を控える。
 ```
 
+* OCIの場合
+
+以下のコマンドを入兎力する。
+
+```bash
+vi default/backend.tf
+
+以下の行の<>となっている部分を現在使用している値に修正する。
+
+region = "<使用しているリージョンの識別子>"
+endpoint = "https://<テナンシのオブジェクト・ストレージ・ネームスペース>.compat.objectstorage.<使用しているリージョンの識別子>.oraclecloud.com"
+```
+
 ### 外部バケット適用
 
 各ソースフォルダ内のterraform.shについて、
@@ -304,7 +320,7 @@ az storage account keys list --resource-group tfstate --account-name <ストレ�
 docker-compose exec terraform ash
 cd ソースフォルダ
 terraform init -migrate-state
-→apply実施後各コンソールでtfstateが更新されていることを確認する。
+→apply実施後各コンソールで外部バケット内にtfstateが保管されていることを確認する。
 ```
 
 ### ローカルに戻す場合
@@ -322,6 +338,11 @@ terraform init -migrate-state
 ```
 
 ### バケットリソース削除
+
+バケットを削除する際は予め、
+中にある全てのファイルを削除し、
+その後terraformからのモジュール削除を行うこと。
+(AWS,OCIのみ)
 
 ```bash
 docker-compose exec terraform ash

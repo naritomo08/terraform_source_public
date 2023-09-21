@@ -25,6 +25,19 @@ resource "oci_core_route_table" "test_route_table" {
     display_name = "${var.route_table_display_name}"
 }
 
+# 自分のパブリックIP取得
+data "http" "ifconfig" {
+  url = "http://ipv4.icanhazip.com/"
+}
+
+variable "allowed_cidr" {
+  default = null
+}
+
+locals {
+  myip         = chomp(data.http.ifconfig.response_body)
+  allowed_cidr = (var.allowed_cidr == null) ? "${local.myip}/32" : var.allowed_cidr
+}
 
 # Security List(Web-Subnet)
 resource "oci_core_security_list" "test_security_list_web" {
@@ -35,8 +48,8 @@ resource "oci_core_security_list" "test_security_list_web" {
         stateless = false
         }
     ingress_security_rules {
-        source = "${var.sl_ingress_source_web}"          
-        protocol = "${var.sl_ingress_protocol_web}"      
+        source = "${local.allowed_cidr}"
+        protocol = "${var.sl_ingress_protocol_web}"
         stateless = false
         tcp_options {
             max = "${var.sl_ingress_tcp_dest_port_max_web}"
@@ -49,7 +62,7 @@ resource "oci_core_security_list" "test_security_list_web" {
 
 # Subent(web)
 resource "oci_core_subnet" "test_web_subnet" {
-    availability_domain = "DXeC:AP-TOKYO-1-AD-1" 
+    availability_domain = "${var.availability_domain[var.region]}"
     cidr_block = "${var.web_subnet_cidr_block}"                 
     compartment_id = "${var.compartment_ocid}"                  
     security_list_ids = ["${oci_core_security_list.test_security_list_web.id}"]       

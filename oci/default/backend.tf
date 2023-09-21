@@ -1,12 +1,14 @@
+# ftstateをバケットに保管する。
 terraform {
-  backend "oci" {
-    bucket                 = "tfstate_bucket"
-    compartment_ocid       = "${compartment_ocid}"
-    tenancy_ocid           = "${var.tenancy_ocid}"
-    user_ocid              = "${var.user_ocid}"
-    fingerprint            = "${var.fingerprint}"
-    private_key_path       = "${var.private_key_path}"
-    region                 = "${var.region}"
-    disable_auto_retries   = "false"
-  }
+  #backend "s3" {
+  #  bucket   = "tfstate_bucket"
+  #  key      = "terraform.tfstate"
+  #  profile  = "oci_access"
+  #  region   = "<使用しているリージョンの識別子>"
+  #  endpoint = "https://<テナンシのオブジェクト・ストレージ・ネームスペース>.compat.objectstorage.<使用しているリージョンの識別子>.oraclecloud.com"    
+  #  skip_region_validation      = true
+  #  skip_credentials_validation = true
+  #  skip_metadata_api_check     = true
+  #  force_path_style            = true
+  #}
 }

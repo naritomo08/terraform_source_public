@@ -26,9 +26,6 @@ variable "sl_egress_destination_web" {
 variable "sl_egress_protocol_web" {
   default = "ALL"
 }
-variable "sl_ingress_source_web" {
-  default = "${allowed_cidr}" 
-}
 variable "sl_ingress_protocol_web" {
   default = "6"
 }
@@ -54,17 +51,9 @@ variable "web_subnet_dns_label" {
 variable "web_subnet_prohibit_public_ip_on_vnic" {
   default = "false"
 }
-
-# 自分のパブリックIP取得
-data "http" "ifconfig" {
-  url = "http://ipv4.icanhazip.com/"
-}
-
-variable "allowed_cidr" {
-  default = null
-}
-
-locals {
-  myip         = chomp(data.http.ifconfig.response_body)
-  allowed_cidr = (var.allowed_cidr == null) ? "${local.myip}/32" : var.allowed_cidr
+variable "availability_domain" {
+  default = {
+    ap-tokyo-1 = "DXeC:AP-TOKYO-1-AD-1"
+    ap-osaka-1 = "eLug:AP-OSAKA-1-AD-1"
+  }
 }

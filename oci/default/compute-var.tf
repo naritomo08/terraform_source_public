@@ -8,11 +8,11 @@ variable "instance_display_name" {
   default = "WebInstance"
 }
 variable "instance_image_ocid" {
-  type = "map"
   default = {
-    ap-osaka-1 = "ocid1.image.oc1.ap-osaka-1.aaaaaaaaj25u2lvizw5m7zzyujx35njtu7qfgy4ci5pqahojdoqoien74znq"
+    ap-tokyo-1 = "ocid1.image.oc1.ap-tokyo-1.aaaaaaaaoqr2sierzhvur65danvbzwz7u5gjhe4stbgil273n2xyp2cpnydq"
+    ap-osaka-1 = "ocid1.image.oc1.ap-osaka-1.aaaaaaaa7slxd3wjvwuer2crlmm5qz3g2y2yma2ru3hhffyqi4bvk6mzu2aa"
   }
 }
-variable "ssh_public_key" {
-  default = "${ssh_public_server_key}"
+variable "ssh_public_key_path" {
+  default = "../apikey/id_server_rsa.pub"
 }
