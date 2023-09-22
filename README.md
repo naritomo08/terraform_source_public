@@ -78,7 +78,7 @@ ARM_CLIENT_ID=
 ARM_CLIENT_SECRET=
 ARM_TENANT_ID=
 
-→AWSの場合、操作ユーザに対応した
+→Azureの場合、操作ユーザに対応した
  上記の情報を入れる。
 
 gcp管理画面からアクセスjsonキー(gcp.json)を入手して、gcpフォルダ内に入れる。
@@ -173,6 +173,8 @@ variable "ssh_public_server_key" {
 以下のサイトの"S3互換バックエンドの使用"の手順１〜３を参照し、バケットアクセスキー設定を行う。
 
 手順３での[default]エントリ部分は、[oci_access]に書き換えること。
+
+terraform環境で使用する際は".env"ファイルのAWS設定を書き換えること。
 
 参考サイト：
 
