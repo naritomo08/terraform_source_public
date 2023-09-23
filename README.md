@@ -43,6 +43,7 @@ terraformソース集になります。
 * Internet gateway
 * Route Table
 * Compute
+* Oracle Database
 
 ## 使用方法
 
