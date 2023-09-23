@@ -56,6 +56,15 @@ resource "oci_core_security_list" "test_security_list_web" {
             min = "${var.sl_ingress_tcp_dest_port_min_web}"
         }
     }
+    ingress_security_rules {
+        source = "${var.web_subnet_cidr_block}"
+        protocol = "${var.sl_ingress_protocol_web}"
+        stateless = false
+        tcp_options {
+            max = "${var.sl_ingress_tcp_dest_port_max_oracle}"
+            min = "${var.sl_ingress_tcp_dest_port_min_oracle}"
+        }
+    }
     vcn_id = "${oci_core_vcn.test_vcn.id}"
     display_name = "${var.sl_display_name_web}"
 }

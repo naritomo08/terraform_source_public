@@ -356,3 +356,46 @@ terraform destroy
 →yesを入力する。
 →各コンソールでバケットが削除されていることを確認する。
 ```
+
+### OracleDB構築（OCI）
+
+予めNW/VMの構築は完了してること。
+
+oracleフォルダ内の2ファイル(database.tf,database-var.tf)をdefaultフォルダへ移す。
+
+varファイル編集をする。
+```bash
+vi database-var.tf
+
+以下の部分を書き換える
+
+variable "db_system_ssh_public_keys" {
+    default = "../apikey/id_server_rsa.pubの内容に書き換える。"
+}
+```
+
+defaultフォルダでterraformコマンドを実施する。
+```bash
+terraform plan
+terraform apply
+→1Hかかる。
+```
+
+### OracleDB接続方法
+
+サーバーにSSHログインし、Oracle Instant Clientを導入する。
+```bash
+wget https://download.oracle.com/otn_software/linux/instantclient/1919000/oracle-instantclient19.19-basic-19.19.0.0.0-1.el9.x86_64.rpm
+wget https://download.oracle.com/otn_software/linux/instantclient/1919000/oracle-instantclient19.19-devel-19.19.0.0.0-1.el9.x86_64.rpm
+wget https://download.oracle.com/otn_software/linux/instantclient/1919000/oracle-instantclient19.19-sqlplus-19.19.0.0.0-1.el9.x86_64.rpm
+sudo rpm -ivh oracle-instantclient*.rpm
+export PATH=/usr/lib/Oracle/19.19/client64/bin:$PATH
+```
+
+OCIコンソールログインし、SB設定画面でDB接続を選択し、DB接続子を控える(2つあるがどちらでも良い。)
+
+サーバーにSSHログインし、以下のコマンド入力して、DB接続できることを確認する。
+
+```bash
+sqlplus system/"database-var.tf内のdb_system_db_home_database_admin_password値"@"前の手順で控えたDB接続子"
+```

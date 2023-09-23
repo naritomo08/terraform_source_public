@@ -35,6 +35,12 @@ variable "sl_ingress_tcp_dest_port_max_web" {
 variable "sl_ingress_tcp_dest_port_min_web" {
   default = "22"
 }
+variable "sl_ingress_tcp_dest_port_max_oracle" {
+  default = "1521"
+}
+variable "sl_ingress_tcp_dest_port_min_oracle" {
+  default = "1521"
+}
 variable "sl_display_name_web" {
   default = "techvan_SL_Web"
 }
