@@ -10,7 +10,7 @@ terraform {
     }
   }
 
-  required_version = "1.3.8"
+  required_version = "1.5.7"
 }
 
 resource "aws_s3_bucket" "terraform_state" {
