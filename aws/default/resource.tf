@@ -267,4 +267,29 @@ resource "aws_instance" "aws_ec2_1" {
   tags = {
     Name = "vm01"
   }
+  lifecycle {
+    ignore_changes = all
+  }
+}
+
+resource "aws_instance" "aws_ec2_2" {
+  # AmazonLinux2
+  ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
+  # AmazonLinux2023
+  #ami                         = data.aws_ssm_parameter.amzn3_latest_ami.value
+  # Ubuntu20.04
+  # ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t2.micro"
+  availability_zone           = "ap-northeast-1c"
+  vpc_security_group_ids      = [aws_security_group.aws_ec2_sg.id]
+  subnet_id                   = aws_subnet.public_1c.id
+  associate_public_ip_address = "false"
+  key_name                    = "serverkey"
+  iam_instance_profile = "SSM_apply_profile"
+  tags = {
+    Name = "vm02"
+  }
+  lifecycle {
+    ignore_changes = all
+  }
 }
