@@ -236,7 +236,22 @@ resource "aws_iam_instance_profile" "instance_role" {
     role = aws_iam_role.instance_role.name
 }
 
-# EC2作成(パブリックIPなし)
+# ====================
+#
+# Elastic IP
+#
+# ====================
+resource "aws_eip" "example_1" {
+  instance = aws_instance.aws_ec2_1.id
+  domain = "vpc"
+}
+
+resource "aws_eip" "example_2" {
+  instance = aws_instance.aws_ec2_2.id
+  domain = "vpc"
+}
+
+# EC2作成
 resource "aws_instance" "aws_ec2_1" {
   # AmazonLinux2
   ami                         = data.aws_ssm_parameter.amzn2_latest_ami.value
