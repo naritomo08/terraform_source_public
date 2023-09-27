@@ -50,7 +50,7 @@ variable "allowed_cidr" {
 }
 
 locals {
-  myip         = chomp(data.http.ifconfig.body)
+  myip         = chomp(data.http.ifconfig.request_body)
   allowed_cidr = (var.allowed_cidr == null) ? "${local.myip}/32" : var.allowed_cidr
 }
 

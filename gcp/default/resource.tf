@@ -24,7 +24,7 @@ variable "allowed_cidr" {
 }
 
 locals {
-  myip         = chomp(data.http.ifconfig.body)
+  myip         = chomp(data.http.ifconfig.request_body)
   allowed_cidr = (var.allowed_cidr == null) ? "${local.myip}/32" : var.allowed_cidr
 }
 
@@ -39,6 +39,19 @@ resource "google_compute_firewall" "ssh" {
   network       = google_compute_network.vpc_network.id
   priority      = 1000
   source_ranges = [local.allowed_cidr]
+  target_tags   = ["ssh"]
+}
+
+resource "google_compute_firewall" "ssh_gcp" {
+  name = "allow-ssh-gcp"
+  allow {
+    ports    = ["22"]
+    protocol = "tcp"
+  }
+  direction     = "INGRESS"
+  network       = google_compute_network.vpc_network.id
+  priority      = 1000
+  source_ranges = ["35.235.240.0/20"]
   target_tags   = ["ssh"]
 }
 
