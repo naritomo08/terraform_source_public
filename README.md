@@ -277,11 +277,7 @@ terraform apply
 
 サーバーにSSHログインし、Oracle Instant Clientを導入する。
 ```bash
-wget https://download.oracle.com/otn_software/linux/instantclient/1919000/oracle-instantclient19.19-basic-19.19.0.0.0-1.el9.x86_64.rpm
-wget https://download.oracle.com/otn_software/linux/instantclient/1919000/oracle-instantclient19.19-devel-19.19.0.0.0-1.el9.x86_64.rpm
-wget https://download.oracle.com/otn_software/linux/instantclient/1919000/oracle-instantclient19.19-sqlplus-19.19.0.0.0-1.el9.x86_64.rpm
-sudo rpm -ivh oracle-instantclient*.rpm
-export PATH=/usr/lib/Oracle/19.19/client64/bin:$PATH
+sudo yum install oracle-instantclient19.3-basic-19.3.0.0.0-1.x86_64.rpm
 ```
 
 OCIコンソールログインし、SB設定画面でDB接続を選択し、DB接続子を控える(2つあるがどちらでも良い。)
