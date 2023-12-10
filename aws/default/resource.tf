@@ -117,16 +117,6 @@ resource "aws_security_group" "aws_ec2_sg" {
   }
 }
 
-# ====================
-#
-# Elastic IP
-#
-# ====================
-resource "aws_eip" "example_1" {
-  instance = aws_instance.aws_ec2_1.id
-  vpc      = true
-}
-
 # ---------------------------
 # EC2
 # ---------------------------
