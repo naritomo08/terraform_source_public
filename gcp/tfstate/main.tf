@@ -1,10 +1,3 @@
-provider "google" {
-    credentials = file("../gcp.json")
-    project     = "api-project-274993796561"
-    region      = "asia-northeast1"
-    zone    = "asia-northeast1-a"
-}
-
 resource "google_storage_bucket" "terraform-state-store" {
     name     = "<バケット名>" #適当なユニークの名前に変えてください
     location = "asia-northeast1"
