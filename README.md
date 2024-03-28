@@ -338,6 +338,12 @@ terraform apply
 以下のコマンドを入力する。
 
 ```bash
+以下の行の<>となっている部分を先ほど控えた値に設定する。
+
+export ARM_ACCESS_KEY=$(az storage account keys list --resource-group tfstate --acc
+ount-name <ストレージアカウント名> --query '[0].value' -o tsv)
+→新しくターミナルを立ち上げるたびに設定すること。
+
 vi default/backend.tf
 
 以下の行の<>となっている部分を先ほど控えた値に修正する。
