@@ -307,6 +307,7 @@ terraform destroy -target リソース名
 →yesを入力する。
 →管理コンソールで削除されていることを確認する。
 ```
+
 ## tfstateを外出しして対応する方法
 
 グループで行う場合、誰かが初回で行えば良い。
@@ -318,7 +319,7 @@ backend.tfの中にあるterraform部分の中を
 ### 外部バケット作成
 
 先にtfstate/main.tf内の<>部分の名前を適当なリソース名に
-変更すること。
+変更すること。(OCI,Azureでは必要ない)
 
 ```bash
 docker-compose exec terraform ash
@@ -332,14 +333,14 @@ terraform apply
 
 * Azureの場合
 
-管理コンソールでストレージアカウント名を控える。
+前の作業で実施したときに出てくるtfstate_nameの値を控える。
 
 以下のコマンドを入力する。
 
 ```bash
 vi default/backend.tf
 
-以下の行の<>となっている部分を現在使用している値に修正する。
+以下の行の<>となっている部分を先ほど控えた値に修正する。
 
 storage_account_name = "<ストレージアカウント名>"
 ```
