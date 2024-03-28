@@ -332,15 +332,14 @@ terraform apply
 
 * Azureの場合
 
-管理コンソールでストレージ名を控える。
+管理コンソールでストレージアカウント名を控える。
 合わせて以下のコマンドでストレージキー情報を取得する。
 
 ```bash
 az login
-*idが複数ある場合は、管理画面と確認して使用しているidを選択する。
+*idが複数ある場合は、管理画面を確認して使用しているidを選択する。
 az account set --subscription="id"
-az storage account keys list --resource-group tfstate --account-name <ストレージアカウント名> --query '[0].value' -o tsv
-→帰ってくる値を控える。
+export ARM_ACCESS_KEY=$(az storage account keys list --resource-group tfstate --account-name <ストレージアカウント名> --query '[0].value' -o tsv)
 ```
 
 * OCIの場合

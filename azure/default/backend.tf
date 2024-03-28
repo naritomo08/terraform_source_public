@@ -4,6 +4,6 @@ terraform {
     #    resource_group_name  = "tfstate"
     #    storage_account_name = "<ストレージ名>"
     #    container_name       = "tfstate"
-    #    key                  = "<ストレージキー>"
+    #    key                  = "default.tkstate"
     #}
 }
