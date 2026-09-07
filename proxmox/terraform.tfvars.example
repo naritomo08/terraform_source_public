@@ -1,0 +1,47 @@
+proxmox_endpoint = "https://pve.example.local:8006/"
+proxmox_insecure = true
+
+template_vm_id     = 9000
+template_node_name = "pve"
+
+target_datastore     = "local-lvm"
+cloud_init_datastore = "local-lvm"
+network_bridge       = "vmbr0"
+
+cloud_init_username = "ubuntu"
+ssh_public_key_file = "~/.ssh/id_ed25519.pub"
+
+dns_servers     = ["192.168.11.1", "8.8.8.8"]
+default_gateway = "192.168.11.1"
+
+vm_tags = ["terraform", "cloud-init"]
+
+virtual_machines = {
+  master1 = {
+    vm_id              = 1001
+    node_name          = "pve"
+    template_vm_id      = 9000
+    template_node_name  = "pve"
+    cloud_init_username = "ubuntu"
+    cpu_cores          = 2
+    memory_mb          = 2048
+    disk_size_gb       = 33
+    ipv4_address       = "192.168.11.45/24"
+    vlan_id            = null
+    tags               = ["control-plane", "ubuntu"]
+  }
+
+  master2 = {
+    vm_id              = 1002
+    node_name          = "pve"
+    template_vm_id      = 9010
+    template_node_name  = "pve"
+    cloud_init_username = "almalinux"
+    cpu_cores          = 2
+    memory_mb          = 2048
+    disk_size_gb       = 33
+    ipv4_address       = "dhcp"
+    vlan_id            = null
+    tags               = ["control-plane", "almalinux"]
+  }
+}
