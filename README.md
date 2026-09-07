@@ -404,3 +404,7 @@ terraform destroy
 →yesを入力する。
 →各コンソールでバケットが削除されていることを確認する。
 ```
+
+## 関連Qiita記事
+
+- [Terraformエトセトラ](https://qiita.com/naritomo08/items/0765649b6e79ded5ef09)
