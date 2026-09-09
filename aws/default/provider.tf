@@ -11,7 +11,6 @@ terraform {
     }
   }
 
-  required_version = "1.5.7"
 }
 
 # 自分のパブリックIP取得用
