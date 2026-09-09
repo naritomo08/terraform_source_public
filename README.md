@@ -185,7 +185,7 @@ terraform環境で使用する際は".env"ファイルのAWS設定を書き換�
 
 ```bash
 cd ..
-docker-compose up -d
+docker compose up -d
 ```
 
 ### terraform利用
@@ -202,7 +202,7 @@ GCPの場合、ComputeEngineの設定-メタデータにて、SSHセキュリテ
 * 値 TRUE
 
 ```bash
-docker-compose exec terraform ash
+docker compose exec terraform ash
 cd ソースフォルダ/default
 terraform init
 terraform plan
@@ -293,7 +293,7 @@ sqlplus system/"database-var.tf内のdb_system_db_home_database_admin_password�
 ソースフォルダで実施
 
 ```bash
-docker-compose exec terraform ash
+docker compose exec terraform ash
 cd ソースフォルダ/default
 terraform destroy
 →yesを入力する。
@@ -322,7 +322,7 @@ backend.tfの中にあるterraform部分の中を
 変更すること。(OCI,Azureでは必要ない)
 
 ```bash
-docker-compose exec terraform ash
+docker compose exec terraform ash
 cd ソースフォルダ/tfstate
 terraform init
 terraform plan
@@ -370,7 +370,7 @@ endpoint = "https://<テナンシのオブジェクト・ストレージ・ネ�
 <>部分の名前を前の手順で設定したものに合わせる。
 
 ```bash
-docker-compose exec terraform ash
+docker compose exec terraform ash
 cd ソースフォルダ
 terraform init -migrate-state
 →apply実施後各コンソールで外部バケット内にtfstateが保管されていることを確認する。
@@ -384,7 +384,7 @@ terraform init -migrate-state
 ＊他に使用している人がいないか確認すること。
 
 ```bash
-docker-compose exec terraform ash
+docker compose exec terraform ash
 cd ソースフォルダ
 terraform init -migrate-state
 →apply実施後ローカルででtfstateが更新されていることを確認する。
@@ -398,7 +398,7 @@ terraform init -migrate-state
 (AWS,OCIのみ)
 
 ```bash
-docker-compose exec terraform ash
+docker compose exec terraform ash
 cd ソースフォルダ/tfstate
 terraform destroy
 →yesを入力する。
