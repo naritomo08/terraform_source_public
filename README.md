@@ -156,7 +156,7 @@ variable "compartment_ocid" {
   default = "コンパートメントのOCID"
 }
 variable "ssh_public_server_key" {
-  default = "../apikey/id_server_rsa.pem"
+  default = "../apikey/id_server_rsa.pub"
 }
 ```
 
