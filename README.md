@@ -3,7 +3,7 @@
 複数人作業に必要なftstate保管バケット作成も含めた、
 terraformソース集になります。
 
-## 各ソースで作成できるもの。
+## 各ソースで作成できるもの
 
 ### AWS
 
@@ -127,15 +127,6 @@ ls
 
 [TerraformでOCI上に仮想サーバを建ててみた](https://blogs.techvan.co.jp/oci/2019/04/08/terraform%e3%81%a7oci%e4%b8%8a%e3%81%ab%e4%bb%ae%e6%83%b3%e3%82%b5%e3%83%bc%e3%83%90%e3%82%92%e5%bb%ba%e3%81%a6%e3%81%a6%e3%81%bf%e3%81%9f/)
 
-### 仮想マシン用キー設定（OCI利用）
-
-```bash
-cd source/oci/apikey
-ssh-keygen -t rsa -N "" -b 2048 -C "id_server_rsa" -f id_server_rsa
-ls
-→id_server_rsa,id_server_rsa.pubファイルが存在していることを確認する。
-```
-
 ### OCIアカウント設定（OCI利用）
 
 ```bash
@@ -169,18 +160,6 @@ variable "ssh_public_server_key" {
 }
 ```
 
-### OCIバケットアクセスキー作成（OCI利用）
-
-以下のサイトの"S3互換バックエンドの使用"の手順１〜３を参照し、バケットアクセスキー設定を行う。
-
-手順３での[default]エントリ部分は、[oci_access]に書き換えること。
-
-terraform環境で使用する際は".env"ファイルのAWS設定を書き換えること。
-
-参考サイト：
-
-[状態ファイル用のオブジェクト・ストレージの使用](https://docs.oracle.com/ja-jp/iaas/Content/API/SDKDocs/terraformUsingObjectStore.htm)
-
 ### terraformコンテナ稼働
 
 ```bash
@@ -212,6 +191,7 @@ terraform apply
 ```
 
 2回目以降は以下のコマンドで良い
+
 ```bash
 terraform plan
 terraform apply
@@ -226,9 +206,6 @@ terraform apply
 applyコマンド実施後に出てくるIPを控え、
 ユーザ:ec2user、秘密鍵:セキュリティキーに対応した秘密鍵
 を使用してSSHログインする。
-
-または、コンソールの接続メニューからセッションマネージャタブを
-選択して、接続をクリックしてコンソールアクセスできることを確認する。
 
 #### Azure
 
@@ -253,9 +230,19 @@ applyコマンド実施後に出てくるIPを控え、
 
 予めNW/VMの構築は完了してること。
 
+### 仮想マシン用キー設定（OCI利用）
+
+```bash
+cd source/oci/apikey
+ssh-keygen -t rsa -N "" -b 2048 -C "id_server_rsa" -f id_server_rsa
+ls
+→id_server_rsa,id_server_rsa.pubファイルが存在していることを確認する。
+```
+
 oracleフォルダ内の2ファイル(database.tf,database-var.tf)をdefaultフォルダへ移す。
 
 varファイル編集をする。
+
 ```bash
 vi database-var.tf
 
@@ -267,6 +254,7 @@ variable "db_system_ssh_public_keys" {
 ```
 
 defaultフォルダでterraformコマンドを実施する。
+
 ```bash
 terraform plan
 terraform apply
@@ -276,11 +264,12 @@ terraform apply
 ### OracleDB接続方法
 
 サーバーにSSHログインし、Oracle Instant Clientを導入する。
+
 ```bash
 sudo yum install oracle-instantclient19.3-basic-19.3.0.0.0-1.x86_64.rpm
 ```
 
-OCIコンソールログインし、SB設定画面でDB接続を選択し、DB接続子を控える(2つあるがどちらでも良い。)
+OCIコンソールログインし、DB設定画面でDB接続を選択し、DB接続子を控える(2つあるがどちらでも良い。)
 
 サーバーにSSHログインし、以下のコマンド入力して、DB接続できることを確認する。
 
@@ -340,10 +329,6 @@ terraform apply
 ```bash
 以下の行の<>となっている部分を先ほど控えた値に設定する。
 
-export ARM_ACCESS_KEY=$(az storage account keys list --resource-group tfstate --acc
-ount-name <ストレージアカウント名> --query '[0].value' -o tsv)
-→新しくターミナルを立ち上げるたびに設定すること。
-
 vi default/backend.tf
 
 以下の行の<>となっている部分を先ほど控えた値に修正する。
@@ -360,7 +345,6 @@ vi default/backend.tf
 
 以下の行の<>となっている部分を現在使用している値に修正する。
 
-region = "<使用しているリージョンの識別子>"
 endpoint = "https://<テナンシのオブジェクト・ストレージ・ネームスペース>.compat.objectstorage.<使用しているリージョンの識別子>.oraclecloud.com"
 ```
 
