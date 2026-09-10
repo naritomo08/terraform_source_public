@@ -160,6 +160,15 @@ variable "ssh_public_server_key" {
 }
 ```
 
+### 仮想マシン用キー設定（OCI利用）
+
+```bash
+cd source/oci/apikey
+ssh-keygen -t rsa -N "" -b 2048 -C "id_server_rsa" -f id_server_rsa
+ls
+→id_server_rsa,id_server_rsa.pubファイルが存在していることを確認する。
+```
+
 ### terraformコンテナ稼働
 
 ```bash
@@ -229,15 +238,6 @@ applyコマンド実施後に出てくるIPを控え、
 ### OracleDB構築（OCI）
 
 予めNW/VMの構築は完了してること。
-
-### 仮想マシン用キー設定（OCI利用）
-
-```bash
-cd source/oci/apikey
-ssh-keygen -t rsa -N "" -b 2048 -C "id_server_rsa" -f id_server_rsa
-ls
-→id_server_rsa,id_server_rsa.pubファイルが存在していることを確認する。
-```
 
 oracleフォルダ内の2ファイル(database.tf,database-var.tf)をdefaultフォルダへ移す。
 
