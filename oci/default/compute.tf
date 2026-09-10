@@ -12,6 +12,7 @@ resource "oci_core_instance" "test_instance" {
         source_type = "image"
     }
     metadata = {
-        ssh_authorized_keys = file("${var.ssh_public_key_path}")
+        ssh_authorized_keys = file("${var.ssh_public_server_key}")
     }
+
 }
